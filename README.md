@@ -401,12 +401,16 @@ HAL-Harvest-Advisory-with-Linguistic-Intelligence/
 
 ## 👨‍💻 Author & Connect
 
-**Abeer Rai**  
+### **Abeer Rai**
 *Full-Stack Engineer • Mobile App Developer • AI Systems Enthusiast*
 
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-theabeerrai-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/theabeerrai)
+[![GitHub](https://img.shields.io/badge/GitHub-abeerrai01-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/abeerrai01)
+[![Email](https://img.shields.io/badge/Email-theabeerrai%40gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:theabeerrai@gmail.com)
+
+- 💼 **LinkedIn**: [linkedin.com/in/theabeerrai](https://linkedin.com/in/theabeerrai)
 - 🐙 **GitHub**: [@abeerrai01](https://github.com/abeerrai01)
-- 💼 **LinkedIn**: [Connect on LinkedIn](https://www.linkedin.com/in/abeerrai01) *(Update with your direct URL)*
-- 📧 **Email**: Contact via GitHub Profile
+- 📧 **Direct Inquiries**: [theabeerrai@gmail.com](mailto:theabeerrai@gmail.com)
 - 🚀 **Placement Objective**: Open for Software Engineering, Full-Stack Developer, and AI/ML Engineering roles.
 
 ---
