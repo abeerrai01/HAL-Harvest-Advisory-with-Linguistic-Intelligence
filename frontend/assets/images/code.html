@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pest &amp; Disease Alerts</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#4CAF50",
+            "background-light": "#f5f5f5",
+            "background-dark": "#112111",
+            "alert-red": "#D32F2F",
+            "warning-amber": "#FFA000",
+            "safe-green": "#388E3C",
+            "action-blue": "#1976D2",
+            "earthy-brown": "#A1887F",
+            "text-light": "#212121",
+            "text-dark": "#E0E0E0",
+            "card-light": "#FFFFFF",
+            "card-dark": "#2E3B2E",
+            "subtle-light": "#EEEEEE",
+            "subtle-dark": "#424242",
+            "border-light": "#E0E0E0",
+            "border-dark": "#424242"
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.75rem",
+            "xl": "1rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="relative flex min-h-screen w-full flex-col">
+<div class="sticky top-0 z-10 flex items-center justify-between border-b border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark p-4">
+<button class="flex h-10 w-10 items-center justify-center rounded-full text-text-light dark:text-text-dark">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="text-xl font-bold leading-tight tracking-tight">Pest &amp; Disease Alerts</h1>
+<button class="flex h-10 w-10 items-center justify-center rounded-full text-text-light dark:text-text-dark">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+<main class="flex-1 p-4 pb-24">
+<div class="mb-6 flex flex-col items-start justify-between gap-4 rounded-xl border border-alert-red/20 bg-alert-red/10 p-5 dark:bg-alert-red/20 @container">
+<div class="flex w-full items-start justify-between">
+<div class="flex flex-col gap-1">
+<p class="text-lg font-bold text-alert-red dark:text-white">Current Status: High Risk</p>
+<p class="text-sm font-normal text-alert-red/80 dark:text-gray-200">Immediate action is recommended for your crops.</p>
+</div>
+<span class="material-symbols-outlined text-4xl text-alert-red dark:text-white">warning</span>
+</div>
+<p class="text-xs text-gray-500 dark:text-gray-400">Last updated: 2 mins ago</p>
+</div>
+<div class="mb-6 rounded-xl border border-primary/20 bg-primary/10 p-4 dark:border-primary/30 dark:bg-card-dark">
+<details>
+<summary class="flex cursor-pointer list-none items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary dark:text-primary">auto_awesome</span>
+<h2 class="font-semibold text-text-light dark:text-text-dark">How We Detect Alerts</h2>
+</div>
+<span class="material-symbols-outlined text-gray-500 transition-transform duration-300 ease-in-out group-open:rotate-180 dark:text-gray-400">expand_more</span>
+</summary>
+<div class="mt-3 border-t border-primary/20 pt-3 dark:border-primary/30">
+<p class="text-sm text-gray-700 dark:text-gray-300">Our AI technology automatically analyzes data from multiple sources to give you timely and accurate alerts:</p>
+<ul class="mt-2 list-inside list-disc space-y-1 text-sm text-gray-600 dark:text-gray-400">
+<li><strong>Satellite Images:</strong> To monitor crop health from above.</li>
+<li><strong>Weather Data:</strong> To predict favorable conditions for pests.</li>
+<li><strong>Farm Sensors:</strong> For real-time soil and moisture data.</li>
+</ul>
+</div>
+</details>
+</div>
+<div class="mb-4 flex gap-3 overflow-x-auto pb-2">
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary/20 px-4 text-primary dark:bg-primary/30 dark:text-white">
+<p class="text-sm font-medium leading-normal">High Severity</p>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-subtle-light px-4 dark:bg-subtle-dark">
+<p class="text-sm font-medium leading-normal">By Crop</p>
+<span class="material-symbols-outlined text-base">expand_more</span>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-subtle-light px-4 dark:bg-subtle-dark">
+<p class="text-sm font-medium leading-normal">By Date</p>
+<span class="material-symbols-outlined text-base">expand_more</span>
+</button>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex flex-col rounded-xl border border-alert-red/50 bg-card-light shadow-sm dark:border-alert-red/60 dark:bg-card-dark">
+<div class="w-full h-2 flex-shrink-0 rounded-t-xl bg-alert-red"></div>
+<div class="flex flex-1 flex-col gap-4 p-4">
+<div class="flex items-start justify-between gap-4">
+<div class="flex flex-1 flex-col gap-1">
+<div class="inline-flex items-center gap-2">
+<span class="material-symbols-outlined text-base text-alert-red">error</span>
+<p class="text-sm font-semibold uppercase tracking-wider text-alert-red">High Severity</p>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-300">Rice Crop</p>
+<p class="text-lg font-bold">Aphid Infestation</p>
+<p class="text-sm font-normal text-gray-600 dark:text-gray-400">Can cause significant yield loss. Detected via satellite imagery.</p>
+</div>
+<div class="h-24 w-24 flex-shrink-0 rounded-lg bg-cover bg-center" data-alt="Close-up image of aphids on a green rice stalk." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAgT4AMY0pE_FG-V6lEIbbDxhqmEhvK-xTJKM3eodBLUyCvZS_v-QXdg-TGpqvcNxWXc30bZIQuFaMcFC_W0qJDf4DjhrESNrhpGr8us5GfWn84QLdKAAEoF6tVvE4_x7ctHAmWlIQEu78KonOVVaWexgBajrhjslJ7ALZjWj2ZpcoCgUaSNB2q_f-qhk9aHeS03Y9Dy5FJXRNNH2EpuxZeUehoYiQfhuHEZXu-0qmGUZBOvTFTg8FXPWnAlxl0JEs1PecJ2GwEPNNk");'></div>
+</div>
+<div class="mt-2 rounded-lg bg-green-50/50 p-4 ring-1 ring-inset ring-primary/20 dark:bg-green-900/10 dark:ring-primary/30">
+<h3 class="flex items-center gap-2 text-lg font-bold text-primary dark:text-primary">
+<span class="material-symbols-outlined">task_alt</span>
+Recommended Solutions
+</h3>
+<ol class="mt-3 list-decimal space-y-2 pl-5 text-base text-text-light dark:text-text-dark">
+<li><strong>Neem Oil Spray:</strong> Apply a solution of neem oil and water. It's a natural and effective repellent.</li>
+<li><strong>Introduce Ladybugs:</strong> These are natural predators of aphids and can help control the population.</li>
+<li><strong>Prune Infested Leaves:</strong> Remove and destroy heavily infested parts of the plant to prevent spreading.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="flex rounded-xl border border-warning-amber/50 bg-card-light shadow-sm dark:border-warning-amber/60 dark:bg-card-dark">
+<div class="w-2 flex-shrink-0 rounded-l-xl bg-warning-amber"></div>
+<div class="flex flex-1 flex-col gap-4 p-4">
+<div class="flex items-start justify-between gap-4">
+<div class="flex flex-1 flex-col gap-1">
+<div class="inline-flex items-center gap-2">
+<span class="material-symbols-outlined text-base text-warning-amber">warning</span>
+<p class="text-sm font-semibold uppercase tracking-wider text-warning-amber">Moderate Severity</p>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-300">Wheat Crop</p>
+<p class="text-lg font-bold">Powdery Mildew</p>
+<p class="text-sm font-normal text-gray-600 dark:text-gray-400">White powdery spots on leaves and stems observed.</p>
+</div>
+<div class="h-24 w-24 flex-shrink-0 rounded-lg bg-cover bg-center" data-alt="Image of a wheat leaf with white spots of powdery mildew." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDI4RYkvncO47QKgXHFjq3ZhPANVMZW8ok2VPXVvVrG_nkc2WlUVb30EKG1m_wPFTzk4w1nuYo86uhyQqxkM7ItmWAgMT1kDVTWAfZ1g3BmcsvPGay7FMLXNctjxCW_sawJVL9Xp_jrqDUVkJIRzaMyg5EmR6-aFy3tK9SA7vHKacic7GXW4SIz1XGDB7iUMLOKq6YxefvW-29v7vmDoaoyqSJBblo59vqa0VbnkqvXC42mQ9kSeIQo4ciZaHNr_bjwLvFsk-FOTJel");'></div>
+</div>
+<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-subtle-light px-4 py-2.5 text-sm font-bold text-text-light dark:bg-subtle-dark dark:text-text-dark">
+<span>View Details</span>
+</button>
+</div>
+</div>
+<div class="flex rounded-xl border border-safe-green/50 bg-card-light shadow-sm dark:border-safe-green/60 dark:bg-card-dark">
+<div class="w-2 flex-shrink-0 rounded-l-xl bg-safe-green"></div>
+<div class="flex flex-1 flex-col gap-4 p-4">
+<div class="flex items-start justify-between gap-4">
+<div class="flex flex-1 flex-col gap-1">
+<div class="inline-flex items-center gap-2">
+<span class="material-symbols-outlined text-base text-safe-green">info</span>
+<p class="text-sm font-semibold uppercase tracking-wider text-safe-green">Low Severity</p>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-300">Tomato Crop</p>
+<p class="text-lg font-bold">Early Blight Watch</p>
+<p class="text-sm font-normal text-gray-600 dark:text-gray-400">Weather conditions are favorable. Monitor plants closely.</p>
+</div>
+<div class="h-24 w-24 flex-shrink-0 rounded-lg bg-cover bg-center" data-alt="Healthy tomato plants in a field." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDlYv5x2YyZpHzSZIM_r5nq9pbgQLqk2OJ7-QUUe5BYzHI9DO60-yzbuxs2_Kgn27KycGVdjSmtSp1VwCOUecjCGFhYBhD8pDm4qLnPUaeKruIwL1rnwhG_nrHlSubAmsMLVYNR0857D_FK3snHfb385bREndpX_0EMHHKIzGbgFcJcHVKViVqNBAk-dyOTYNmNoTPfNdTrf7kKzHSbCAXTt7fX15WkTeoRKLdmZdwpn7b8r2utbGssHrv-bb5p69wpX0OIT3XR7nIU");'></div>
+</div>
+<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-subtle-light px-4 py-2.5 text-sm font-bold text-text-light dark:bg-subtle-dark dark:text-text-dark">
+<span>Learn More</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<button class="fixed bottom-6 right-6 z-20 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg">
+<span class="material-symbols-outlined">add_comment</span>
+</button>
+</div>
+</body></html>

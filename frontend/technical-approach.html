@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAL Technical Approach - Farmer Assistant Application</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .tech-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        .tech-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .tech-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .tech-card li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .tech-card li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #764ba2;
+        }
+
+        .architecture-diagram {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .flow-step {
+            background: #e8eaf6;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .flow-arrow {
+            text-align: center;
+            font-size: 1.5em;
+            color: #764ba2;
+            margin: 5px 0;
+        }
+
+        .data-source-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .data-source-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+        }
+
+        .data-source-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin: 5px 5px 5px 0;
+        }
+
+        .badge-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .badge-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .badge-warning {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .badge-info {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .methodology-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .method-step {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            position: relative;
+            border-top: 4px solid #667eea;
+        }
+
+        .method-step::before {
+            content: counter(step-counter);
+            counter-increment: step-counter;
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .methodology-container {
+            counter-reset: step-counter;
+        }
+
+        .ai-model-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .ai-model-card h4 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .ai-model-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .ai-model-card li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .ai-model-card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .highlight-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .highlight-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+
+        .icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌾 HAL Technical Approach</h1>
+            <p>Farmer Assistant Application - Complete Technical Documentation</p>
+        </div>
+
+        <div class="content">
+            <!-- Technologies Section -->
+            <div class="section">
+                <h2><span class="icon">🛠️</span> Technologies Used</h2>
+                
+                <div class="two-column">
+                    <div>
+                        <h3>HAL App (Frontend - Mobile)</h3>
+                        <div class="tech-grid">
+                            <div class="tech-card">
+                                <h4>Core Framework</h4>
+                                <ul>
+                                    <li>React Native 0.81.5</li>
+                                    <li>Expo SDK ~54.0.20</li>
+                                    <li>React 19.1.0</li>
+                                    <li>TypeScript 5.9.2</li>
+                                </ul>
+                            </div>
+                            <div class="tech-card">
+                                <h4>Navigation & UI</h4>
+                                <ul>
+                                    <li>React Navigation 7.x</li>
+                                    <li>Expo Router 6.0.13</li>
+                                    <li>React Native Maps 1.18.0</li>
+                                    <li>Expo Vector Icons</li>
+                                </ul>
+                            </div>
+                            <div class="tech-card">
+                                <h4>Media & Location</h4>
+                                <ul>
+                                    <li>Expo Image Picker</li>
+                                    <li>Expo Location</li>
+                                    <li>Expo AV (Audio/Video)</li>
+                                    <li>Expo Speech (TTS)</li>
+                                </ul>
+                            </div>
+                            <div class="tech-card">
+                                <h4>Storage & Auth</h4>
+                                <ul>
+                                    <li>Firebase SDK 12.5.0</li>
+                                    <li>AsyncStorage 2.2.0</li>
+                                    <li>Firebase Auth</li>
+                                </ul>
+                            </div>
+                            <div class="tech-card">
+                                <h4>Communication</h4>
+                                <ul>
+                                    <li>Axios 1.7.7</li>
+                                    <li>WebSocket (LiveKit)</li>
+                                    <li>RESTful API Integration</li>
+                                </ul>
+                            </div>
+                            <div class="tech-card">
+                                <h4>Platform Support</h4>
+                                <ul>
+                                    <li>Android (Native)</li>
+                                    <li>iOS (Native)</li>
+                                    <li>Web (React Native Web)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3>HAL API (Backend - Server)</h3>
+                        <div class="tech-grid">
+                            <div class="tech-card">
+                                <h4>Runtime & Framework</h4>
+                                <ul>
+                                    <li>Node.js (ES Modules)</li>
+                                    <li>Express.js 4.21.1</li>
+                                    <li>HTTP Server</li>
+                                    <li>WebSocket Server (ws)</li>
+                                </ul>
+                            </div>
+                            <div class="tech-card">
+                                <h4>Database & Storage</h4>
+                                <ul>
+                                    <li>Firebase Firestore</li>
+                                    <li>Firebase Admin SDK</li>
+                                    <li>Cloudinary (Image Storage)</li>
+                                </ul>
+                            </div>
+                            <div class="tech-card">
+                                <h4>AI/ML Services</h4>
+                                <ul>
+                                    <li>Google Gemini 2.0 Flash</li>
+                                    <li>Hugging Face Inference</li>
+                                    <li>Google Speech-to-Text</li>
+                                    <li>Custom Pest/Disease Model</li>
+                                    <li>PAYAL AI Assistant</li>
+                                </ul>
+                            </div>
+                            <div class="tech-card">
+                                <h4>Market & Voice Services</h4>
+                                <ul>
+                                    <li>Data.gov.in API (Market Prices)</li>
+                                    <li>Uttarakhand Mandi API</li>
+                                    <li>PAYAL Chat API</li>
+                                    <li>PAYAL 2.0 Voice (LiveKit)</li>
+                                    <li>Price Prediction Models</li>
+                                </ul>
+                            </div>
+                            <div class="tech-card">
+                                <h4>External APIs</h4>
+                                <ul>
+                                    <li>Sentinel Hub (Satellite)</li>
+                                    <li>Planet Labs (Satellite)</li>
+                                    <li>OpenWeatherMap</li>
+                                    <li>WeatherAPI.com</li>
+                                    <li>SoilGrids (Soil Data)</li>
+                                </ul>
+                            </div>
+                            <div class="tech-card">
+                                <h4>Image Processing</h4>
+                                <ul>
+                                    <li>Sharp 0.34.4</li>
+                                    <li>Multer (File Upload)</li>
+                                    <li>FormData</li>
+                                </ul>
+                            </div>
+                            <div class="tech-card">
+                                <h4>Deployment</h4>
+                                <ul>
+                                    <li>Vercel (Serverless)</li>
+                                    <li>Node.js Worker Process</li>
+                                    <li>Environment Variables</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Hardware Requirements</h3>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>Mobile Devices</h4>
+                        <ul>
+                            <li>Android 6.0+ (API 23+)</li>
+                            <li>iOS 13.0+</li>
+                            <li>GPS Capability</li>
+                            <li>Camera (for image capture)</li>
+                            <li>Microphone (for voice input)</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Server Infrastructure</h4>
+                        <ul>
+                            <li>Node.js 18+ Runtime</li>
+                            <li>Firebase Project</li>
+                            <li>API Keys for External Services</li>
+                            <li>Cloud Storage (Cloudinary/Firebase)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI/ML Models Section -->
+            <div class="section">
+                <h2><span class="icon">🤖</span> AI/ML Models & Approach</h2>
+                
+                <div class="ai-model-card">
+                    <h4>1. Google Gemini 2.0 Flash - Crop Advisory & Recommendations</h4>
+                    <ul>
+                        <li><strong>Purpose:</strong> Generate intelligent crop advisory recommendations based on NDVI, weather, soil data, and field conditions</li>
+                        <li><strong>Input:</strong> Field geometry, NDVI values, weather forecasts, soil health data, current crop information, language preference</li>
+                        <li><strong>Output:</strong> Comprehensive JSON with recommended crops, fertilizer guidance, irrigation plans, pest management, market insights</li>
+                        <li><strong>Features:</strong> Multi-language support (10+ Indian languages), context-aware recommendations, seasonal calendar generation</li>
+                        <li><strong>API Endpoint:</strong> <code>generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent</code></li>
+                    </ul>
+                </div>
+
+                <div class="ai-model-card">
+                    <h4>2. Google Gemini 2.0 Flash - Disease Chat & Q&A</h4>
+                    <ul>
+                        <li><strong>Purpose:</strong> Conversational AI for answering farmer questions about detected plant diseases</li>
+                        <li><strong>Input:</strong> Disease label, user question, conversation history, field context, language</li>
+                        <li><strong>Output:</strong> Expert advice on diagnosis, immediate actions, organic solutions, prevention tips</li>
+                        <li><strong>Features:</strong> Context-aware responses, multi-turn conversations, organic-first recommendations</li>
+                    </ul>
+                </div>
+
+                <div class="ai-model-card">
+                    <h4>3. Google Gemini 2.0 Flash - Weather Advisory</h4>
+                    <ul>
+                        <li><strong>Purpose:</strong> Generate dynamic weather-based agricultural advisories</li>
+                        <li><strong>Input:</strong> Current weather, 48-hour forecast, 7-day forecast, location coordinates, language</li>
+                        <li><strong>Output:</strong> Risk summaries, irrigation recommendations, crop protection advice, action items</li>
+                        <li><strong>Features:</strong> Real-time risk assessment, proactive recommendations, multi-language support</li>
+                    </ul>
+                </div>
+
+                <div class="ai-model-card">
+                    <h4>4. Custom Pest/Disease Classification Model (Hugging Face)</h4>
+                    <ul>
+                        <li><strong>Purpose:</strong> Classify plant diseases and pests from crop images</li>
+                        <li><strong>Model Location:</strong> <code>theabeerrai-pest-hal.hf.space</code></li>
+                        <li><strong>Input:</strong> Crop image (JPEG/PNG), language preference</li>
+                        <li><strong>Output:</strong> Disease name, confidence score, detailed report, other possible diseases</li>
+                        <li><strong>Features:</strong> Multi-disease detection, confidence scoring, detailed pathology reports</li>
+                    </ul>
+                </div>
+
+                <div class="ai-model-card">
+                    <h4>5. Google Speech-to-Text API - Voice Input</h4>
+                    <ul>
+                        <li><strong>Purpose:</strong> Convert farmer voice queries to text for voice assistant</li>
+                        <li><strong>Input:</strong> Audio file (WAV, M4A, FLAC, OGG), language code</li>
+                        <li><strong>Output:</strong> Transcribed text, confidence score</li>
+                        <li><strong>Features:</strong> Enhanced model for noise reduction, automatic punctuation, multi-language support (10+ Indian languages)</li>
+                        <li><strong>Supported Languages:</strong> English, Hindi, Marathi, Tamil, Telugu, Kannada, Malayalam, Gujarati, Punjabi, Bengali, Odia</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>AI/ML Integration Strategy</h4>
+                    <p><strong>Hybrid Approach:</strong> The system uses a combination of:</p>
+                    <ul>
+                        <li><strong>Pre-trained Models:</strong> Google Gemini for natural language understanding and generation</li>
+                        <li><strong>Custom Models:</strong> Hugging Face-based pest/disease classification model</li>
+                        <li><strong>Rule-based Logic:</strong> NDVI calculations, anomaly detection, health scoring</li>
+                        <li><strong>Data Fusion:</strong> Combining satellite imagery, weather data, soil data, and historical patterns</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- System Architecture Section -->
+            <div class="section">
+                <h2><span class="icon">🏗️</span> System Architecture</h2>
+                
+                <div class="architecture-diagram">
+                    <h3>High-Level Architecture</h3>
+                    <div class="flow-diagram">
+                        <div class="flow-step">
+                            <strong>Mobile App (HAL App)</strong><br>
+                            React Native + Expo | Firebase Auth | AsyncStorage | Maps | Camera
+                        </div>
+                        <div class="flow-arrow">↓ HTTPS/REST API</div>
+                        <div class="flow-step">
+                            <strong>Backend API Server (HAL API)</strong><br>
+                            Express.js | Firestore | WebSocket | File Upload | Request Routing
+                        </div>
+                        <div class="flow-arrow">↓ Background Processing</div>
+                        <div class="flow-step">
+                            <strong>Worker Process</strong><br>
+                            Job Queue | Satellite Data Fetching | NDVI Calculation | Report Generation
+                        </div>
+                        <div class="flow-arrow">↓ External Services</div>
+                        <div class="flow-step">
+                            <strong>External APIs & Services</strong><br>
+                            Sentinel Hub / Planet Labs | OpenWeatherMap | Google Gemini | Hugging Face | Google STT | Data.gov.in (Mandi Prices) | PAYAL AI
+                        </div>
+                        <div class="flow-arrow">↓ Data Storage</div>
+                        <div class="flow-step">
+                            <strong>Firebase Firestore</strong><br>
+                            Users | Fields | Jobs | Reports | Pest/Disease History
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Data Flow Architecture</h3>
+                <div class="architecture-diagram">
+                    <div class="flow-diagram">
+                        <div class="flow-step">
+                            <strong>1. User Authentication</strong><br>
+                            App → Firebase Auth → User Session → Firestore User Document
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>2. Field Setup</strong><br>
+                            User draws field on map → 4 GPS coordinates → POST /api/v1/fields → Firestore: users/{uid}/fields/{field_name}
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>3. Crop Health Analysis Request</strong><br>
+                            User taps "Analyze Field" → POST /api/v1/jobs → Firestore: jobs/{job_id} (status: PENDING)
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>4. Worker Processing</strong><br>
+                            Worker polls Firestore → Finds PENDING job → Updates to PROCESSING → Fetches field geometry
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>5. Parallel Data Collection</strong><br>
+                            Worker → Sentinel Hub API (NDVI) + OpenWeatherMap API (Weather) + SoilGrids API (Soil) → Processes data
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>6. AI Recommendation Generation</strong><br>
+                            Processed data → Google Gemini API → Comprehensive crop advisory JSON → Firestore: reports/{job_id}
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>7. Job Completion</strong><br>
+                            Worker updates job status to COMPLETED → App polls status → Displays report to user
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Pest/Disease Detection Flow</h3>
+                <div class="architecture-diagram">
+                    <div class="flow-diagram">
+                        <div class="flow-step">
+                            <strong>1. Image Capture</strong><br>
+                            User captures crop image → Expo Image Picker → Image file/URI
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>2. Image Upload</strong><br>
+                            App → POST /api/v1/pest-disease/classify (multipart/form-data) → Backend receives image
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>3. Disease Classification</strong><br>
+                            Backend → Hugging Face API (theabeerrai-pest-hal.hf.space) → Disease report with confidence scores
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>4. AI Recommendation</strong><br>
+                            Disease report → POST /api/v1/pd-recommendation → Google Gemini → Treatment recommendations
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>5. Conversational Q&A</strong><br>
+                            User asks question → POST /api/v1/disease-chat → Google Gemini → Expert answer
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>6. History Storage</strong><br>
+                            All detections → Firestore: users/{uid}/pd_history → User can view past detections
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Methodology Section -->
+            <div class="section">
+                <h2><span class="icon">📋</span> Methodology & Implementation Process</h2>
+                
+                <div class="methodology-container">
+                    <h3>Development Methodology</h3>
+                    <div class="methodology-steps">
+                        <div class="method-step">
+                            <h4>Phase 1: Requirements & Planning</h4>
+                            <p>Identified farmer needs: crop health monitoring, pest/disease detection, weather advisories, market prices, government schemes. Defined user personas and use cases.</p>
+                        </div>
+                        <div class="method-step">
+                            <h4>Phase 2: Architecture Design</h4>
+                            <p>Designed microservices architecture: Mobile app (React Native), Backend API (Express.js), Worker process (Node.js), External API integrations. Defined data models and API contracts.</p>
+                        </div>
+                        <div class="method-step">
+                            <h4>Phase 3: Core Infrastructure</h4>
+                            <p>Set up Firebase project (Auth, Firestore), configured development environment, implemented authentication flow, created base API structure with Express.js.</p>
+                        </div>
+                        <div class="method-step">
+                            <h4>Phase 4: Field Management</h4>
+                            <p>Implemented map-based field drawing (react-native-maps), GPS coordinate capture, field storage in Firestore, field selection and management UI.</p>
+                        </div>
+                        <div class="method-step">
+                            <h4>Phase 5: Satellite Data Integration</h4>
+                            <p>Integrated Sentinel Hub and Planet Labs APIs, implemented NDVI calculation pipeline, created worker process for asynchronous job processing, built NDVI visualization.</p>
+                        </div>
+                        <div class="method-step">
+                            <h4>Phase 6: Weather Integration</h4>
+                            <p>Integrated OpenWeatherMap and WeatherAPI.com, implemented weather caching, built weather advisory generation with AI, created forecast visualization.</p>
+                        </div>
+                        <div class="method-step">
+                            <h4>Phase 7: AI/ML Integration</h4>
+                            <p>Integrated Google Gemini for crop advisory, implemented Hugging Face pest/disease model, added Google Speech-to-Text, built conversational AI for disease Q&A.</p>
+                        </div>
+                        <div class="method-step">
+                            <h4>Phase 8: Image Processing</h4>
+                            <p>Implemented image upload with Multer, integrated pest/disease classification API, built image preprocessing pipeline, created result visualization.</p>
+                        </div>
+                        <div class="method-step">
+                            <h4>Phase 9: Multi-language Support</h4>
+                            <p>Implemented i18n system, integrated Google Translate API, added language selection UI, configured AI models for multi-language responses.</p>
+                        </div>
+                        <div class="method-step">
+                            <h4>Phase 10: Testing & Optimization</h4>
+                            <p>Conducted end-to-end testing, optimized API response times, implemented error handling and retry logic, added caching mechanisms, performance tuning.</p>
+                        </div>
+                        <div class="method-step">
+                            <h4>Phase 11: Deployment</h4>
+                            <p>Deployed backend to Vercel, configured environment variables, set up worker process, published mobile app to app stores, configured production Firebase.</p>
+                        </div>
+                        <div class="method-step">
+                            <h4>Phase 12: Monitoring & Maintenance</h4>
+                            <p>Implemented logging and error tracking, set up API monitoring, created user feedback mechanisms, continuous improvement based on usage data.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Implementation Best Practices</h3>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>Code Organization</h4>
+                        <ul>
+                            <li>Modular component structure</li>
+                            <li>Service layer separation</li>
+                            <li>Reusable utility functions</li>
+                            <li>TypeScript for type safety</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Error Handling</h4>
+                        <ul>
+                            <li>Try-catch blocks for async operations</li>
+                            <li>Retry logic with exponential backoff</li>
+                            <li>User-friendly error messages</li>
+                            <li>Comprehensive logging</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Performance</h4>
+                        <ul>
+                            <li>Image compression before upload</li>
+                            <li>API response caching</li>
+                            <li>Lazy loading of components</li>
+                            <li>Optimized Firestore queries</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Security</h4>
+                        <ul>
+                            <li>Firebase Authentication</li>
+                            <li>API key management via env vars</li>
+                            <li>Input validation and sanitization</li>
+                            <li>HTTPS for all API calls</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Sources Section -->
+            <div class="section">
+                <h2><span class="icon">📊</span> Data Sources & Collection Methods</h2>
+                
+                <h3>Satellite Imagery Data</h3>
+                <div class="data-source-grid">
+                    <div class="data-source-card">
+                        <h4>Sentinel Hub</h4>
+                        <p><strong>Provider:</strong> Sentinel Hub (Sentinel-2 satellite)</p>
+                        <p><strong>Data Type:</strong> Multispectral imagery (Red, NIR, SCL bands)</p>
+                        <p><strong>Collection Method:</strong> REST API with evalscript for NDVI calculation</p>
+                        <p><strong>Frequency:</strong> On-demand (when field analysis is requested)</p>
+                        <p><strong>Coverage:</strong> Global, 10m resolution</p>
+                        <p><strong>API Endpoint:</strong> <code>services.sentinel-hub.com/api/v1/process</code></p>
+                        <span class="badge badge-primary">Primary Source</span>
+                    </div>
+                    <div class="data-source-card">
+                        <h4>Planet Labs</h4>
+                        <p><strong>Provider:</strong> Planet Labs (PlanetScope/Dove satellites)</p>
+                        <p><strong>Data Type:</strong> 4-band analytic imagery (Red, Green, Blue, NIR)</p>
+                        <p><strong>Collection Method:</strong> REST API for quick search and analytics</p>
+                        <p><strong>Frequency:</strong> On-demand (fallback if Sentinel Hub fails)</p>
+                        <p><strong>Coverage:</strong> Global, 3-5m resolution</p>
+                        <p><strong>API Endpoint:</strong> <code>api.planet.com/data/v1</code></p>
+                        <span class="badge badge-info">Fallback Source</span>
+                    </div>
+                </div>
+
+                <h3>Weather Data</h3>
+                <div class="data-source-grid">
+                    <div class="data-source-card">
+                        <h4>OpenWeatherMap</h4>
+                        <p><strong>Provider:</strong> OpenWeatherMap</p>
+                        <p><strong>Data Type:</strong> Current weather + 5-day forecast (3-hour intervals)</p>
+                        <p><strong>Collection Method:</strong> REST API (GET requests)</p>
+                        <p><strong>Frequency:</strong> Real-time + cached forecasts</p>
+                        <p><strong>Parameters:</strong> Temperature, humidity, rainfall, wind speed, pressure</p>
+                        <p><strong>API Endpoint:</strong> <code>api.openweathermap.org/data/2.5</code></p>
+                        <span class="badge badge-primary">Primary Source</span>
+                    </div>
+                    <div class="data-source-card">
+                        <h4>WeatherAPI.com</h4>
+                        <p><strong>Provider:</strong> WeatherAPI.com</p>
+                        <p><strong>Data Type:</strong> Current weather + 5-day forecast</p>
+                        <p><strong>Collection Method:</strong> REST API (GET requests)</p>
+                        <p><strong>Frequency:</strong> Real-time + cached forecasts</p>
+                        <p><strong>Parameters:</strong> Temperature, humidity, rainfall, wind, UV index</p>
+                        <p><strong>API Endpoint:</strong> <code>api.weatherapi.com/v1</code></p>
+                        <span class="badge badge-info">Alternative Source</span>
+                    </div>
+                </div>
+
+                <h3>Soil Data</h3>
+                <div class="data-source-grid">
+                    <div class="data-source-card">
+                        <h4>SoilGrids</h4>
+                        <p><strong>Provider:</strong> ISRIC World Soil Information</p>
+                        <p><strong>Data Type:</strong> Soil properties (pH, clay%, sand%, silt%, organic carbon)</p>
+                        <p><strong>Collection Method:</strong> REST API (GET requests with lat/lon)</p>
+                        <p><strong>Frequency:</strong> On-demand (when generating crop advisory)</p>
+                        <p><strong>Coverage:</strong> Global, 250m resolution</p>
+                        <p><strong>API Endpoint:</strong> <code>rest.isric.org/soilgrids/v2.0</code></p>
+                        <span class="badge badge-success">Soil Health</span>
+                    </div>
+                </div>
+
+                <h3>Market Price Data</h3>
+                <div class="data-source-grid">
+                    <div class="data-source-card">
+                        <h4>Data.gov.in</h4>
+                        <p><strong>Provider:</strong> Government of India</p>
+                        <p><strong>Data Type:</strong> Daily mandi prices (modal, min, max) for commodities</p>
+                        <p><strong>Collection Method:</strong> REST API with progressive filter relaxation</p>
+                        <p><strong>Frequency:</strong> Real-time (daily updates)</p>
+                        <p><strong>Coverage:</strong> All Indian states, districts, markets</p>
+                        <p><strong>API Endpoint:</strong> <code>api.data.gov.in/resource/{resource_id}</code></p>
+                        <span class="badge badge-primary">Primary Source</span>
+                    </div>
+                    <div class="data-source-card">
+                        <h4>Uttarakhand Mandi API</h4>
+                        <p><strong>Provider:</strong> Hugging Face (Custom Model)</p>
+                        <p><strong>Data Type:</strong> Price predictions, optimal sell dates</p>
+                        <p><strong>Collection Method:</strong> REST API (POST requests)</p>
+                        <p><strong>Frequency:</strong> On-demand predictions</p>
+                        <p><strong>Coverage:</strong> Uttarakhand markets</p>
+                        <p><strong>API Endpoint:</strong> <code>1pankaj-uttarakhand-mandi-price-api.hf.space/predict</code></p>
+                        <span class="badge badge-info">Prediction Service</span>
+                    </div>
+                </div>
+
+                <h3>AI Assistant Data</h3>
+                <div class="data-source-grid">
+                    <div class="data-source-card">
+                        <h4>PAYAL API</h4>
+                        <p><strong>Provider:</strong> Hugging Face (Custom AI Model)</p>
+                        <p><strong>Data Type:</strong> Agricultural advice, crop recommendations, fertilizer guidance</p>
+                        <p><strong>Collection Method:</strong> REST API (chat endpoints)</p>
+                        <p><strong>Frequency:</strong> Real-time conversational responses</p>
+                        <p><strong>Coverage:</strong> Multi-language support (10+ Indian languages)</p>
+                        <p><strong>API Endpoint:</strong> <code>theabeerrai-payal.hf.space</code></p>
+                        <span class="badge badge-success">AI Assistant</span>
+                    </div>
+                    <div class="data-source-card">
+                        <h4>PAYAL 2.0 Voice</h4>
+                        <p><strong>Provider:</strong> Hugging Face + LiveKit</p>
+                        <p><strong>Data Type:</strong> Real-time voice conversations</p>
+                        <p><strong>Collection Method:</strong> WebRTC via LiveKit</p>
+                        <p><strong>Frequency:</strong> Real-time bidirectional audio</p>
+                        <p><strong>Coverage:</strong> Voice-based agricultural assistance</p>
+                        <p><strong>API Endpoint:</strong> <code>theabeerrai-payal-2-0.hf.space</code></p>
+                        <span class="badge badge-success">Voice AI</span>
+                    </div>
+                </div>
+
+                <h3>User-Generated Data</h3>
+                <div class="data-source-grid">
+                    <div class="data-source-card">
+                        <h4>Field Boundaries</h4>
+                        <p><strong>Source:</strong> User input via mobile app</p>
+                        <p><strong>Collection Method:</strong> GPS coordinates from map drawing</p>
+                        <p><strong>Data Format:</strong> 4-point polygon (lat1, lon1, lat2, lon2, lat3, lon3, lat4, lon4)</p>
+                        <p><strong>Storage:</strong> Firestore: <code>users/{uid}/fields/{field_name}</code></p>
+                        <span class="badge badge-warning">User Input</span>
+                    </div>
+                    <div class="data-source-card">
+                        <h4>Crop Images</h4>
+                        <p><strong>Source:</strong> User camera capture</p>
+                        <p><strong>Collection Method:</strong> Expo Image Picker</p>
+                        <p><strong>Data Format:</strong> JPEG/PNG images</p>
+                        <p><strong>Storage:</strong> Temporary upload → Processing → Results stored in Firestore</p>
+                        <span class="badge badge-warning">User Input</span>
+                    </div>
+                    <div class="data-source-card">
+                        <h4>Voice Queries</h4>
+                        <p><strong>Source:</strong> User voice recording</p>
+                        <p><strong>Collection Method:</strong> Expo Audio recording</p>
+                        <p><strong>Data Format:</strong> Audio files (WAV, M4A, FLAC)</p>
+                        <p><strong>Processing:</strong> Google Speech-to-Text API → Text → AI processing</p>
+                        <span class="badge badge-warning">User Input</span>
+                    </div>
+                    <div class="data-source-card">
+                        <h4>Current Crop Information</h4>
+                        <p><strong>Source:</strong> User selection in app</p>
+                        <p><strong>Collection Method:</strong> UI dropdown/selection</p>
+                        <p><strong>Data Format:</strong> Crop name, sowing date (optional)</p>
+                        <p><strong>Storage:</strong> Firestore: <code>users/{uid}/fields/{field_name}</code></p>
+                        <span class="badge badge-warning">User Input</span>
+                    </div>
+                </div>
+
+                <h3>Data Processing Pipeline</h3>
+                <div class="architecture-diagram">
+                    <div class="flow-diagram">
+                        <div class="flow-step">
+                            <strong>1. Data Collection</strong><br>
+                            User inputs field boundaries → GPS coordinates stored in Firestore
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>2. Job Creation</strong><br>
+                            User requests analysis → Job created with status PENDING → Stored in Firestore
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>3. Worker Processing</strong><br>
+                            Worker polls for PENDING jobs → Fetches field geometry → Calculates bounding box
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>4. Parallel API Calls</strong><br>
+                            Worker → Sentinel Hub (NDVI) + OpenWeatherMap (Weather) + SoilGrids (Soil) → All data collected
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>5. Data Processing</strong><br>
+                            NDVI calculation → Anomaly detection → Historical comparison → Health scoring
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>6. AI Analysis</strong><br>
+                            Processed data → Google Gemini API → Comprehensive recommendations → JSON response
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>7. Report Generation</strong><br>
+                            All data combined → Report document created → Stored in Firestore: reports/{job_id}
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>8. User Notification</strong><br>
+                            Job status updated to COMPLETED → App polls status → User views report
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Data Storage Structure</h3>
+                <div class="highlight-box">
+                    <h4>Firestore Collections</h4>
+                    <pre style="background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto;">
+users/
+  {farmer_ID}/
+    fields/
+      {field_name}/
+        lat1, lon1, lat2, lon2, lat3, lon3, lat4, lon4
+        createdAt
+        currentCrop (optional)
+    jobs/
+      {job_ID}/
+        job_ID, field_ID, farmer_ID, job_type
+        status (PENDING/PROCESSING/COMPLETED/FAILED)
+        requested_at, updated_at, completed_at
+    reports/
+      {job_ID}/
+        field_ID, job_ID
+        ndvi_analysis, weather_data, soil_data
+        recommendations, generated_at
+    pd_history/
+      {detection_id}/
+        disease_name, confidence, image_url
+        recommendations, created_at
+
+jobs/
+  {job_ID}/
+    (Global job tracking)
+
+reports/
+  {job_ID}/
+    (Global report storage)
+                    </pre>
+                </div>
+            </div>
+
+            <!-- Mandi Price Feature -->
+            <div class="section">
+                <h2><span class="icon">💰</span> Mandi Price (Market Prices) Feature</h2>
+                
+                <h3>Overview</h3>
+                <p>The Mandi Price feature provides real-time and historical market prices for agricultural commodities, helping farmers make informed decisions about when and where to sell their produce for maximum profit.</p>
+                
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>Data Source</h4>
+                        <ul>
+                            <li>Data.gov.in API (Government of India)</li>
+                            <li>Uttarakhand Mandi Price API (Hugging Face)</li>
+                            <li>Real-time daily price updates</li>
+                            <li>Historical price data (last 10-30 records)</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Key Features</h4>
+                        <ul>
+                            <li>Current market prices (modal, min, max)</li>
+                            <li>Price trend visualization</li>
+                            <li>Predicted optimal sell date</li>
+                            <li>Price change percentage</li>
+                            <li>Market-wise price comparison</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>AI Prediction</h4>
+                        <ul>
+                            <li>Linear regression for price forecasting</li>
+                            <li>7-day price prediction</li>
+                            <li>Optimal sell date recommendation</li>
+                            <li>Market volatility analysis</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Mandi Price Flow</h3>
+                <div class="architecture-diagram">
+                    <div class="flow-diagram">
+                        <div class="flow-step">
+                            <strong>1. User Opens Market Prices Screen</strong><br>
+                            User navigates to Market Prices → Selects crop and market (mandi) → App displays available crops
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>2. Fetch Market Metadata</strong><br>
+                            App → GET /api/v1/market-meta → Returns available states, districts, markets for selected commodity
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>3. Request Market Prices</strong><br>
+                            App → GET /api/v1/market-prices?commodity={crop}&state={state}&district={district}&market={mandi}
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>4. Backend Processing</strong><br>
+                            Backend → Data.gov.in API → Progressive filter relaxation (state+district+market → commodity only) → Returns best_today and last10 prices
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>5. Price Prediction</strong><br>
+                            App → GET /api/v1/market-prices/predict → Backend calculates linear regression → Predicts optimal sell date (next 7 days)
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>6. Display Results</strong><br>
+                            App displays: Current price, price range, price change %, historical chart, predicted sell date, market influencers
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Market Price Data Structure</h3>
+                <div class="highlight-box">
+                    <h4>API Response Format</h4>
+                    <pre style="background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto;">
+{
+  "ok": true,
+  "source": "data.gov.in",
+  "best_today": {
+    "modal_price": 2500,
+    "min_price": 2400,
+    "max_price": 2600,
+    "market": "Dehradun",
+    "district": "Dehradun",
+    "state": "Uttarakhand",
+    "commodity": "Rice",
+    "date": "2024-01-15"
+  },
+  "last10": [
+    { "date": "2024-01-15", "modal_price": 2500, "market": "Dehradun", ... },
+    { "date": "2024-01-14", "modal_price": 2480, "market": "Dehradun", ... }
+  ]
+}
+                    </pre>
+                </div>
+            </div>
+
+            <!-- PAYAL Feature -->
+            <div class="section">
+                <h2><span class="icon">🌾</span> PAYAL - Precision Agriculture And Yield Advisory with Linguistic Intelligence</h2>
+                
+                <h3>Overview</h3>
+                <p>PAYAL is an intelligent multilingual farming assistant that provides personalized agricultural advice through both text chat and voice interactions. It combines AI-powered natural language understanding with domain-specific agricultural knowledge.</p>
+                
+                <div class="ai-model-card">
+                    <h4>PAYAL Capabilities</h4>
+                    <ul>
+                        <li><strong>Crop Advice:</strong> Get crop recommendations based on location, soil conditions, and season</li>
+                        <li><strong>Fertilizer Advice:</strong> Learn about NPK requirements and fertilizer recommendations for specific crops</li>
+                        <li><strong>Soil Health:</strong> Get soil health diagnosis and improvement recommendations</li>
+                        <li><strong>Weather Forecast:</strong> Get weather forecasts and farming advice based on location</li>
+                        <li><strong>Pest Information:</strong> Learn about pest detection and control methods</li>
+                        <li><strong>Government Schemes:</strong> Get information about government schemes and subsidies</li>
+                    </ul>
+                </div>
+
+                <h3>PAYAL Architecture</h3>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>PAYAL 1.0 (Text Chat)</h4>
+                        <ul>
+                            <li>RESTful API integration</li>
+                            <li>Session-based conversations</li>
+                            <li>Multi-language support</li>
+                            <li>Context-aware responses</li>
+                            <li>Chat history storage</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>PAYAL 2.0 (Voice Assistant)</h4>
+                        <ul>
+                            <li>LiveKit WebRTC integration</li>
+                            <li>Real-time voice communication</li>
+                            <li>Bidirectional audio streaming</li>
+                            <li>Low-latency responses</li>
+                            <li>Multilingual voice support</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Intelligent Routing</h4>
+                        <ul>
+                            <li>Intent detection</li>
+                            <li>Automatic endpoint selection</li>
+                            <li>Context preservation</li>
+                            <li>Location-aware responses</li>
+                            <li>Personalized recommendations</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>PAYAL Flow</h3>
+                <div class="architecture-diagram">
+                    <div class="flow-diagram">
+                        <div class="flow-step">
+                            <strong>1. User Initiates Conversation</strong><br>
+                            User opens Voice Assistant screen → Selects text chat or voice mode → PAYAL greets user
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>2. Text Chat Flow (PAYAL 1.0)</strong><br>
+                            User types query → App → POST /chat → PAYAL API (theabeerrai-payal.hf.space) → Intent detection → Route to specialized endpoint (crop/fertilizer/weather)
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>3. Voice Chat Flow (PAYAL 2.0)</strong><br>
+                            User taps voice button → App → POST /start → PAYAL 2.0 API → Returns LiveKit credentials (URL, token, roomName)
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>4. LiveKit Connection</strong><br>
+                            App connects to LiveKit room → Establishes WebRTC connection → Starts audio track publishing → Listens for remote audio tracks
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>5. Voice Processing</strong><br>
+                            User speaks → Audio streamed to PAYAL 2.0 → Speech-to-text → AI processing → Text-to-speech → Audio streamed back to user
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>6. Response Display</strong><br>
+                            PAYAL response received → Displayed as text (chat) or played as audio (voice) → Conversation history saved → User can continue conversation
+                        </div>
+                    </div>
+                </div>
+
+                <h3>PAYAL API Endpoints</h3>
+                <div class="highlight-box">
+                    <h4>Available Endpoints</h4>
+                    <ul>
+                        <li><code>POST /chat</code> - Unified chat endpoint with intelligent routing</li>
+                        <li><code>POST /chat/crop</code> - Crop-specific advice</li>
+                        <li><code>POST /chat/fertilizer</code> - Fertilizer recommendations</li>
+                        <li><code>POST /chat/weather</code> - Weather-based farming advice</li>
+                        <li><code>GET /chat/new?uid={uid}</code> - Start new conversation session</li>
+                        <li><code>GET /chat/history?uid={uid}&session_id={id}</code> - Retrieve chat history</li>
+                        <li><code>POST /start</code> - Start PAYAL 2.0 voice session (returns LiveKit credentials)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Future Expansion Scope -->
+            <div class="section">
+                <h2><span class="icon">🚀</span> Future Expansion Scope</h2>
+                
+                <h3>Community Channels - Farmer-to-Farmer Network</h3>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>Village-Level Channels</h4>
+                        <ul>
+                            <li>Location-based farmer communities</li>
+                            <li>Village-specific discussion channels</li>
+                            <li>Local knowledge sharing</li>
+                            <li>Peer-to-peer problem solving</li>
+                            <li>Regional language support</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Community Features</h4>
+                        <ul>
+                            <li>Question & Answer forums</li>
+                            <li>Photo sharing (crop issues, solutions)</li>
+                            <li>Expert farmer verification</li>
+                            <li>Community-driven best practices</li>
+                            <li>Local market price sharing</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Technical Implementation</h4>
+                        <ul>
+                            <li>Firestore subcollections: <code>communities/{village_id}/posts</code></li>
+                            <li>Real-time updates with Firestore listeners</li>
+                            <li>Push notifications for replies</li>
+                            <li>Image storage in Firebase/Cloudinary</li>
+                            <li>Moderation system for content quality</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>SMS-Based Services for Low Connectivity</h3>
+                <div class="ai-model-card">
+                    <h4>SMS Integration Strategy</h4>
+                    <ul>
+                        <li><strong>USSD Codes:</strong> *123# style menu for basic services (crop prices, weather alerts)</li>
+                        <li><strong>IVR (Interactive Voice Response):</strong> Call-based service for voice queries in local languages</li>
+                        <li><strong>SMS Alerts:</strong> Automated SMS for critical alerts (weather warnings, pest outbreaks, price changes)</li>
+                        <li><strong>SMS Query System:</strong> Send SMS query → Receive SMS response with recommendations</li>
+                        <li><strong>Offline Mode:</strong> App works offline, syncs when connectivity available</li>
+                    </ul>
+                </div>
+
+                <div class="architecture-diagram">
+                    <div class="flow-diagram">
+                        <div class="flow-step">
+                            <strong>SMS Service Flow</strong><br>
+                            Farmer sends SMS: "PRICE RICE DEHRADUN" → SMS Gateway → Backend API → Query market prices → Format response → Send SMS reply
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>USSD Service Flow</strong><br>
+                            Farmer dials *123# → USSD Gateway → Backend menu system → User selects option → Response sent via USSD
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>IVR Service Flow</strong><br>
+                            Farmer calls toll-free number → IVR system → Voice prompts in local language → Speech recognition → Query processing → Text-to-speech response
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Solutions for Low/No Network Regions</h3>
+                <div class="methodology-steps">
+                    <div class="method-step">
+                        <h4>Offline-First Architecture</h4>
+                        <p>Implement local database (SQLite/Realm) for offline storage. Cache all critical data (crop advisory, market prices, pest info) locally. Sync when connectivity available.</p>
+                    </div>
+                    <div class="method-step">
+                        <h4>Data Compression</h4>
+                        <p>Compress all API responses, images, and data transfers. Use efficient data formats (Protocol Buffers, MessagePack). Minimize bandwidth usage.</p>
+                    </div>
+                    <div class="method-step">
+                        <h4>Progressive Data Loading</h4>
+                        <p>Load essential data first, background sync for detailed information. Prioritize critical features (weather alerts, pest warnings) over nice-to-have features.</p>
+                    </div>
+                    <div class="method-step">
+                        <h4>Mesh Network Support</h4>
+                        <p>Enable device-to-device communication via Bluetooth/WiFi Direct. Farmers can share data with nearby devices without internet. Community data sharing.</p>
+                    </div>
+                    <div class="method-step">
+                        <h4>Edge Computing</h4>
+                        <p>Deploy edge servers in rural areas. Local processing reduces latency and bandwidth. Cache frequently accessed data at edge locations.</p>
+                    </div>
+                    <div class="method-step">
+                        <h4>Satellite Internet Integration</h4>
+                        <p>Partner with satellite internet providers (Starlink, OneWeb) for remote areas. Provide subsidized connectivity for farmers.</p>
+                    </div>
+                </div>
+
+                <h3>Low-Resource Optimization Technologies</h3>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>Mobile Optimization</h4>
+                        <ul>
+                            <li>Lightweight app bundle (< 50MB)</li>
+                            <li>Efficient image formats (WebP, AVIF)</li>
+                            <li>Code splitting and lazy loading</li>
+                            <li>Minimal dependencies</li>
+                            <li>Battery-efficient background tasks</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Data Efficiency</h4>
+                        <ul>
+                            <li>API response caching (24-48 hours)</li>
+                            <li>Incremental data updates</li>
+                            <li>Delta sync (only changed data)</li>
+                            <li>Compressed data formats</li>
+                            <li>Smart prefetching</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Network Optimization</h4>
+                        <ul>
+                            <li>Request batching</li>
+                            <li>Connection pooling</li>
+                            <li>HTTP/2 multiplexing</li>
+                            <li>Adaptive quality based on network</li>
+                            <li>Retry with exponential backoff</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Storage Optimization</h4>
+                        <ul>
+                            <li>Local SQLite database</li>
+                            <li>Automatic cache cleanup</li>
+                            <li>Selective data retention</li>
+                            <li>Compressed local storage</li>
+                            <li>Smart storage quotas</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Emerging Technologies for Rural Impact</h3>
+                <div class="ai-model-card">
+                    <h4>Innovative Solutions</h4>
+                    <ul>
+                        <li><strong>Blockchain for Transparency:</strong> Immutable records for crop certification, fair trade, supply chain tracking</li>
+                        <li><strong>IoT Sensors:</strong> Low-cost soil moisture, temperature sensors with LoRaWAN connectivity (long-range, low-power)</li>
+                        <li><strong>Drone Integration:</strong> Affordable drone services for field monitoring, crop health assessment, spraying</li>
+                        <li><strong>AI on Edge:</strong> On-device AI models for pest/disease detection (no internet required after initial download)</li>
+                        <li><strong>Digital Payments:</strong> UPI integration for seamless transactions, loan applications, insurance claims</li>
+                        <li><strong>Blockchain-based Land Records:</strong> Secure, tamper-proof land ownership records</li>
+                        <li><strong>Voice-First Interface:</strong> Voice-only mode for illiterate farmers, hands-free operation</li>
+                        <li><strong>QR Code Integration:</strong> QR codes on seed packets, fertilizers for instant information access</li>
+                        <li><strong>Augmented Reality (AR):</strong> AR overlay on crops to identify pests, diseases, nutrient deficiencies</li>
+                        <li><strong>Machine Learning at Edge:</strong> Local ML models for real-time crop health analysis without cloud dependency</li>
+                    </ul>
+                </div>
+
+                <h3>Impact Strategy for Resource-Constrained Environments</h3>
+                <div class="architecture-diagram">
+                    <div class="flow-diagram">
+                        <div class="flow-step">
+                            <strong>1. Tiered Service Model</strong><br>
+                            <strong>Basic Tier (No Internet):</strong> Offline mode, cached data, SMS/USSD services<br>
+                            <strong>Standard Tier (2G/3G):</strong> Essential features, compressed data, optimized APIs<br>
+                            <strong>Premium Tier (4G+):</strong> Full features, real-time updates, high-quality images
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>2. Community Hubs</strong><br>
+                            Establish village-level kiosks with WiFi hotspots. Local volunteers help farmers access services. Shared devices for farmers without smartphones.
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>3. Government Partnerships</strong><br>
+                            Integrate with government schemes (PM-KISAN, Fasal Bima). Leverage government infrastructure (Common Service Centers). Subsidized data plans for farmers.
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>4. Local Language Support</strong><br>
+                            Full support for regional languages. Voice interface in local dialects. Community-driven translations. Cultural context in recommendations.
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>5. Training & Support</strong><br>
+                            Video tutorials in local languages. In-person training sessions. Toll-free helpline. Community champions program.
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Implementation Roadmap</h3>
+                <div class="highlight-box">
+                    <h4>Phase 1: Foundation (Months 1-3)</h4>
+                    <ul>
+                        <li>Offline-first architecture implementation</li>
+                        <li>Local database integration (SQLite)</li>
+                        <li>Data compression and caching</li>
+                        <li>Basic SMS integration</li>
+                    </ul>
+                    
+                    <h4>Phase 2: Community Features (Months 4-6)</h4>
+                    <ul>
+                        <li>Village-level community channels</li>
+                        <li>Real-time chat and forums</li>
+                        <li>Photo sharing and Q&A</li>
+                        <li>Community moderation tools</li>
+                    </ul>
+                    
+                    <h4>Phase 3: Low-Connectivity Solutions (Months 7-9)</h4>
+                    <ul>
+                        <li>USSD code implementation</li>
+                        <li>IVR system development</li>
+                        <li>Enhanced SMS services</li>
+                        <li>Mesh network support</li>
+                    </ul>
+                    
+                    <h4>Phase 4: Advanced Technologies (Months 10-12)</h4>
+                    <ul>
+                        <li>On-device AI models</li>
+                        <li>IoT sensor integration</li>
+                        <li>Drone services integration</li>
+                        <li>Blockchain for transparency</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Key Features Summary -->
+            <div class="section">
+                <h2><span class="icon">✨</span> Key Technical Features</h2>
+                
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>Asynchronous Job Processing</h4>
+                        <ul>
+                            <li>Firestore-based job queue</li>
+                            <li>Worker process with polling</li>
+                            <li>Status tracking (PENDING → PROCESSING → COMPLETED)</li>
+                            <li>Concurrent job processing (max 3 jobs)</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>NDVI Calculation</h4>
+                        <ul>
+                            <li>Formula: (NIR - Red) / (NIR + Red)</li>
+                            <li>Cloud masking and filtering</li>
+                            <li>Health score generation (0-100)</li>
+                            <li>Historical comparison</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Multi-language Support</h4>
+                        <ul>
+                            <li>10+ Indian languages</li>
+                            <li>Google Translate integration</li>
+                            <li>AI responses in user's language</li>
+                            <li>Language preference storage</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Real-time Communication</h4>
+                        <ul>
+                            <li>WebSocket support (LiveKit)</li>
+                            <li>RESTful API endpoints</li>
+                            <li>Push notifications (planned)</li>
+                            <li>Status polling mechanism</li>
+                            <li>PAYAL voice assistant</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Market Intelligence</h4>
+                        <ul>
+                            <li>Real-time mandi prices</li>
+                            <li>Price trend analysis</li>
+                            <li>Optimal sell date prediction</li>
+                            <li>Market volatility tracking</li>
+                            <li>Multi-market comparison</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>AI Assistant</h4>
+                        <ul>
+                            <li>PAYAL text chat</li>
+                            <li>PAYAL 2.0 voice assistant</li>
+                            <li>Multi-language support</li>
+                            <li>Context-aware responses</li>
+                            <li>Conversation history</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Image Processing</h4>
+                        <ul>
+                            <li>Multi-format support (JPEG, PNG)</li>
+                            <li>Base64 encoding option</li>
+                            <li>Image compression</li>
+                            <li>Cloudinary storage fallback</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Error Handling & Resilience</h4>
+                        <ul>
+                            <li>Retry logic with exponential backoff</li>
+                            <li>Fallback data sources</li>
+                            <li>Mock data for development</li>
+                            <li>Comprehensive error logging</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: #f8f9fa; padding: 30px; text-align: center; color: #666;">
+            <p><strong>HAL - Farmer Assistant Application</strong></p>
+            <p>Technical Approach Document | Generated for Presentation</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">© 2024 HAL Project</p>
+        </div>
+    </div>
+</body>
+</html>
+

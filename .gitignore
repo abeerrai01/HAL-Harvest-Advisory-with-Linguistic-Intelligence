@@ -1,0 +1,52 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Environment variables
+.env
+.env*
+*/.env
+*/.env*
+
+# Secrets & Service Accounts
+*firebase*.json
+serviceAccountKey.json
+*/serviceAccountKey.json
+*/*firebase*.json
+*.pem
+*.key
+*.jks
+*.p8
+*.p12
+
+# Expo & React Native
+.expo/
+*/.expo/
+dist/
+*/dist/
+web-build/
+*/web-build/
+expo-env.d.ts
+*/expo-env.d.ts
+.kotlin/
+*/.kotlin/
+
+# Generated native folders
+/frontend/ios/
+/frontend/android/
+/ios/
+/android/
+
+# Build artifacts
+*.apk
+*.aab
+
+# Logs
+*.log
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# OS
+.DS_Store
+Thumbs.db

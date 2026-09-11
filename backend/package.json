@@ -1,0 +1,31 @@
+{
+  "name": "hal-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "NODE_ENV=development node src/server.js",
+    "worker": "RUN_WORKER_STANDALONE=true node src/worker.js",
+    "dev:worker": "NODE_ENV=development RUN_WORKER_STANDALONE=true node src/worker.js"
+  },
+  "dependencies": {
+    "@huggingface/inference": "^3.15.0",
+    "axios": "^1.13.1",
+    "cloudinary": "^1.41.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.1",
+    "firebase-admin": "^13.0.1",
+    "form-data": "^4.0.0",
+    "fs": "^0.0.1-security",
+    "multer": "^1.4.5-lts.1",
+    "sharp": "^0.34.4",
+    "ws": "^8.18.3"
+  },
+  "description": "Production-ready backend API for the HAL (Farmer Assistant) application, handling field management, job queuing, and crop health analysis.",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

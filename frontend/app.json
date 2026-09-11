@@ -1,0 +1,78 @@
+{
+  "expo": {
+    "name": "HAL-APP",
+    "slug": "HAL-APP",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "halapp",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "bundleIdentifier": "com.hal.app",
+      "jsEngine": "jsc",
+      "supportsTablet": true,
+      "deploymentTarget": "13.0",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "We need microphone access to let you ask questions by voice for pest & disease advisory.",
+        "NSCameraUsageDescription": "We need camera access for video features."
+      }
+    },
+    "android": {
+      "package": "com.hal.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "backgroundImage": "./assets/images/android-icon-background.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.INTERNET",
+        "android.permission.CAMERA",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDCgm81pxp9vA1p4Pniqg0oTwrFNNSiZ0"
+        }
+      }
+    },
+    "web": {
+      "output": "single",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "./app.plugin.js",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff",
+          "dark": {
+            "backgroundColor": "#000000"
+          }
+        }
+      ],
+      "expo-audio",
+      "expo-font",
+      "expo-image",
+      "expo-router",
+      "expo-status-bar",
+      "expo-web-browser"
+    ],
+    "experiments": {
+      "typedRoutes": false,
+      "reactCompiler": false
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6517453b-4ed8-41c1-b820-0755e97f775f"
+      }
+    }
+  }
+}
