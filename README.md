@@ -1,13 +1,12 @@
 <div align="center">
 
-<img src="docs/assets/team_logo.png" alt="DIT Agronauts Logo" width="160" />
+<img src="docs/assets/app_logo.png" alt="HAL Logo" width="150" />
 
 # HAL / हल
 ### Harvest Advisory with Linguistic Intelligence
 **From Soil to Solutions: An AI-Powered, Multilingual Smart Crop Advisory System for Small & Marginal Farmers**
 
-[![Smart India Hackathon](https://img.shields.io/badge/SIH-SIH25010-orange.svg)](https://sih.gov.in/)
-[![Theme](https://img.shields.io/badge/Theme-Agriculture%2C%20FoodTech%20%26%20Rural%20Development-green.svg)]()
+[![Domain](https://img.shields.io/badge/Domain-Smart%20Agriculture%20%26%20FoodTech-green.svg)]()
 [![Frontend](https://img.shields.io/badge/Frontend-React%20Native%20%7C%20Expo%20SDK%2057-blue.svg)]()
 [![Backend](https://img.shields.io/badge/Backend-Node.js%20%7C%20Express%20%7C%20WebSockets-green.svg)]()
 [![AI Engine](https://img.shields.io/badge/AI-Google%20Gemini%203.8%20Flash-purple.svg)]()
@@ -29,16 +28,35 @@ Over **11.8 crore small and marginal farmers (86% of India's agricultural commun
 ## 🛰️ Innovation Edge: "Space + Soil + Speech"
 
 ```mermaid
-graph TD
-    A[Satellite Imagery: Sentinel-2 & ISRO] -->|NDVI / EVI / Soil Moisture| D[HAL Intelligence Core]
-    B[Soil Health Card & Soil Chemistry] -->|NPK / pH / Micronutrients| D
-    C[Agro-Weather & Mandi APIs] -->|4.0 Timeline / Live Prices| D
-    E[Farmer Voice & Pest Photos] -->|Bhashini / Gemini 3.8 Flash| D
-    D --> F[Hyper-Local Actionable Advisory]
-    F --> G[Krishi Sakhi Voice Assistant]
-    F --> H[Custom Fertilization Schedule]
-    F --> I[Pest Diagnostic & Remedy]
-    F --> J[Optimal Mandi Selling Strategy]
+flowchart TD
+    subgraph Inputs ["🌾 Data Ingestion Layers"]
+        A["🛰️ Satellite Imagery<br/>(Sentinel-2 & ISRO NDVI/EVI)"]
+        B["🧪 Soil Health Card<br/>(NPK, pH & Chemistry)"]
+        C["🌦️ Agro-Weather & Mandi APIs<br/>(4.0 Timeline & Live Prices)"]
+        E["🗣️ Farmer Voice & Photos<br/>(Bhashini & Gemini 3.8 Flash)"]
+    end
+
+    D["🧠 HAL Intelligence Core<br/>(Agronomic Rule Engine & AI)"]
+    F["📋 Hyper-Local Actionable Advisory"]
+
+    subgraph Outputs ["🎯 Actionable Farm Solutions"]
+        G["🎙️ Krishi Sakhi Voice Assistant"]
+        H["🌱 Custom Fertilization Schedule"]
+        I["🔍 Pest Diagnostic & Remedy"]
+        J["📈 Optimal Mandi Selling Strategy"]
+    end
+
+    A --> D
+    B --> D
+    C --> D
+    E --> D
+
+    D --> F
+
+    F --> G
+    F --> H
+    F --> I
+    F --> J
 ```
 
 - **Hyper-Local Precision**: Field-level predictions using 4-point polygon satellite coordinate tracking, not generalized district averages.
@@ -196,8 +214,8 @@ graph TD
 │   ├── app.json              # Expo application configuration (SDK 57)
 │   └── package.json
 ├── docs/                     # Project presentation & reference materials
-│   ├── DITAgronaughtsFINAL_OUTPUT.pptx  # Official SIH Presentation Slide Deck
-│   ├── SIH_Template_Final.pdf           # SIH Project Summary Document
+│   ├── HAL_Project_Presentation.pptx    # Project Presentation Slide Deck
+│   ├── HAL_Project_Summary.pdf          # Project Architecture & Overview Document
 │   └── assets/                          # Architectural diagrams & UI screenshots
 ├── .gitignore                # Shields credentials, node_modules, and build outputs
 └── README.md
@@ -255,12 +273,12 @@ npx expo start -c
 5. C. Reid Turner et al., *"A conceptual basis for feature engineering,"* Journal of Systems and Software, vol. 49, no. 1, pp. 3–15, 1999.
 
 ### Project Documents
-- 📊 **Presentation Deck**: [DITAgronaughtsFINAL_OUTPUT.pptx](docs/DITAgronaughtsFINAL_OUTPUT.pptx)
-- 📄 **Proposal Summary**: [SIH_Template_Final.pdf](docs/SIH_Template_Final.pdf)
+- 📊 **Presentation Deck**: [HAL_Project_Presentation.pptx](docs/HAL_Project_Presentation.pptx)
+- 📄 **Project Architecture & Overview**: [HAL_Project_Summary.pdf](docs/HAL_Project_Summary.pdf)
 
 ---
 
 <div align="center">
-  <b>Built with ❤️ by Team DIT Agronauts</b><br/>
-  <i>Smart India Hackathon 2025 • Problem Statement SIH25010</i>
+  <b>Built with ❤️ for Indian Agriculture</b><br/>
+  <i>HAL — Harvest Advisory with Linguistic Intelligence</i>
 </div>
